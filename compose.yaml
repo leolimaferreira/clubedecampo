@@ -1,9 +1,30 @@
+version: '3.8'
+
 services:
-  postgres:
-    image: 'postgres:latest'
+  db:
+    image: postgres:16.3
+    container_name: clube-campo-db
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: clube-campo
     ports:
-      - '5432'
+      - "5432:5432"
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    networks:
+      - clube-campo-network
+
+  pgadmin:
+    image: dpage/pgadmin4:8.9
+    container_name: pgadmin4-clube-campo
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "15432:80"
+    networks:
+      - clube-campo-network
+
+networks:
+  clube-campo-network:
