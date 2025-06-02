@@ -2,6 +2,7 @@ package com.clubedecampo.service;
 
 import com.clubedecampo.entity.Reserva;
 import com.clubedecampo.repository.ReservaRepository;
+import com.clubedecampo.validator.ReservaValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +11,10 @@ import org.springframework.stereotype.Service;
 public class ReservaService {
 
     private final ReservaRepository reservaRepository;
+    private final ReservaValidator reservaValidator;
 
-    public void salvar(Reserva reserva) {
-        reservaRepository.save(reserva);
+    public Reserva salvar(Reserva reserva) {
+        reservaValidator.validar(reserva);
+        return reservaRepository.save(reserva);
     }
 }

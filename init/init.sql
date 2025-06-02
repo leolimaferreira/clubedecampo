@@ -1,7 +1,7 @@
 CREATE TABLE associado (
                            id UUID PRIMARY KEY,
                            nome VARCHAR(100) NOT NULL,
-                           rg VARCHAR(20) NOT NULL,
+                           rg VARCHAR(20) UNIQUE NOT NULL,
                            cpf VARCHAR(14) UNIQUE NOT NULL,
                            endereco VARCHAR(255) NOT NULL,
                            cep VARCHAR(10) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE associado (
 CREATE TABLE dependente (
                             id UUID PRIMARY KEY,
                             nome VARCHAR(100) NOT NULL,
-                            rg VARCHAR(20) NOT NULL,
+                            rg VARCHAR(20) UNIQUE NOT NULL,
                             associado_id UUID REFERENCES associado(id) ON DELETE CASCADE
 );
 

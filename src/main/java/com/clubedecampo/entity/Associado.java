@@ -24,10 +24,10 @@ public class Associado {
     @Column(name = "nome", nullable = false, length = 100)
     private String nome;
 
-    @Column(name = "rg", nullable = false, length = 20)
+    @Column(name = "rg", nullable = false, length = 20, unique = true)
     private String rg;
 
-    @Column(name = "cpf", nullable = false, length = 14)
+    @Column(name = "cpf", nullable = false, length = 14, unique = true)
     private String cpf;
 
     @Column(name = "endereco", nullable = false, length = 255)

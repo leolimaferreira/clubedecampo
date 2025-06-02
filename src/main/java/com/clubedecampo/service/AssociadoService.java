@@ -2,6 +2,7 @@ package com.clubedecampo.service;
 
 import com.clubedecampo.entity.Associado;
 import com.clubedecampo.repository.AssociadoRepository;
+import com.clubedecampo.validator.AssociadoValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,12 @@ import java.util.UUID;
 public class AssociadoService {
 
     private final AssociadoRepository associadoRepository;
+    private final AssociadoValidator associadoValidator;
 
-    public void salvar(Associado associado) {
+    public Associado salvar(Associado associado) {
+        associadoValidator.validar(associado);
         associadoRepository.save(associado);
+        return associadoRepository.save(associado);
     }
 
     public Optional<Associado> buscarPorId(UUID id) {
