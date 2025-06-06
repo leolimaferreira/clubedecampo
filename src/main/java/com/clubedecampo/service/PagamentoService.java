@@ -19,7 +19,7 @@ public class PagamentoService {
         return pagamentoRepository.save(pagamento);
     }
 
-    public Optional<Pagamento> obterPorId(UUID id) {
+    public Optional<Pagamento> buscarPorId(UUID id) {
         return pagamentoRepository.findById(id);
     }
 

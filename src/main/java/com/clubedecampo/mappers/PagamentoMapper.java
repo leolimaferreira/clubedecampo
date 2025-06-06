@@ -1,6 +1,7 @@
 package com.clubedecampo.mappers;
 
 import com.clubedecampo.dtos.CadastroPagamentoDTO;
+import com.clubedecampo.dtos.ResultadoPesquisaPagamentoDTO;
 import com.clubedecampo.entity.Pagamento;
 import com.clubedecampo.repository.AssociadoRepository;
 import com.clubedecampo.service.AssociadoService;
@@ -18,5 +19,5 @@ public abstract class PagamentoMapper {
     public abstract Pagamento toEntity(CadastroPagamentoDTO dto);
 
     @Mapping(target = "associadoId", source = "associado.id")
-    public abstract CadastroPagamentoDTO toDto(Pagamento dependente);
+    public abstract ResultadoPesquisaPagamentoDTO toDto(Pagamento dependente);
 }

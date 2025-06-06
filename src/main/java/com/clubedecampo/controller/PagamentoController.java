@@ -3,6 +3,7 @@ package com.clubedecampo.controller;
 import com.clubedecampo.dtos.AtualizarPagamentoDTO;
 import com.clubedecampo.dtos.CadastroPagamentoDTO;
 import com.clubedecampo.dtos.ErroRespostaDTO;
+import com.clubedecampo.dtos.ResultadoPesquisaPagamentoDTO;
 import com.clubedecampo.entity.Pagamento;
 import com.clubedecampo.mappers.PagamentoMapper;
 import com.clubedecampo.service.AssociadoService;
@@ -39,7 +40,7 @@ public class PagamentoController implements GenericController{
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {
-        Optional<Pagamento> pagamentoOptional = pagamentoService.obterPorId(id);
+        Optional<Pagamento> pagamentoOptional = pagamentoService.buscarPorId(id);
 
         if(pagamentoOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -51,7 +52,7 @@ public class PagamentoController implements GenericController{
 
     @PutMapping("{id}")
     public ResponseEntity<Object> atualizar(@PathVariable UUID id, @RequestBody @Valid AtualizarPagamentoDTO dto) {
-        Optional<Pagamento> pagamentoOptional = pagamentoService.obterPorId(id);
+        Optional<Pagamento> pagamentoOptional = pagamentoService.buscarPorId(id);
 
         if(pagamentoOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -63,5 +64,15 @@ public class PagamentoController implements GenericController{
         pagamentoService.atualizar(pagamento);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ResultadoPesquisaPagamentoDTO> buscarPorId(@PathVariable UUID id) {
+
+        return pagamentoService.buscarPorId(id)
+                .map(pagamento -> {
+                    var dto = pagamentoMapper.toDto(pagamento);
+                    return ResponseEntity.ok(dto);
+                }).orElseGet( () -> ResponseEntity.notFound().build());
     }
 }
