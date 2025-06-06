@@ -7,6 +7,7 @@ import com.clubedecampo.repository.ReservaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,5 +40,9 @@ public class AreaService {
 
     public void atualizar(Area area) {
         areaRepository.save(area);
+    }
+
+    public List<Area> listar() {
+        return areaRepository.findAll();
     }
 }

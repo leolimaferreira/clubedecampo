@@ -81,4 +81,16 @@ public class ReservaController implements GenericController {
                     return ResponseEntity.ok(dto);
                 }).orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping
+    public ResponseEntity<Object> listar() {
+        List<Reserva> reservas = reservaService.listar();
+
+        if (reservas.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErroRespostaDTO(HttpStatus.NOT_FOUND.value(), "Nenhuma reserva cadastrada!", List.of()));
+        }
+
+        return ResponseEntity.ok(reservas);
+    }
 }

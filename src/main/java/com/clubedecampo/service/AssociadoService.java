@@ -6,6 +6,7 @@ import com.clubedecampo.validator.AssociadoValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,6 +38,10 @@ public class AssociadoService {
     public void atualizar(Associado associado) {
         associadoValidator.validarCadastroEAtualizacao(associado);
         associadoRepository.save(associado);
+    }
+
+    public List<Associado> listar() {
+        return associadoRepository.findAll();
     }
 
 }

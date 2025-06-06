@@ -75,4 +75,16 @@ public class DependenteController implements GenericController {
                     return ResponseEntity.ok(dto);
                 }).orElseGet( () -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping
+    public ResponseEntity<Object> listar() {
+        List<Dependente> dependentes = dependenteService.listar();
+
+        if (dependentes.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErroRespostaDTO(HttpStatus.NOT_FOUND.value(), "Nenhum dependente cadastrado!", List.of()));
+        }
+
+        return ResponseEntity.ok(dependentes);
+    }
 }

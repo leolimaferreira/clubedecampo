@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,5 +39,9 @@ public class MensalidadeService {
 
     public void atualizar(Mensalidade mensalidade) {
         mensalidadeRepository.save(mensalidade);
+    }
+
+    public List<Mensalidade> listar() {
+        return mensalidadeRepository.findAll();
     }
 }

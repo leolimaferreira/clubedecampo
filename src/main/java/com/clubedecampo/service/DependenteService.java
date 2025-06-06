@@ -6,6 +6,7 @@ import com.clubedecampo.validator.DependenteValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,5 +33,9 @@ public class DependenteService {
     public void atualizar(Dependente dependente) {
         dependenteValidator.validar(dependente);
         dependenteRepository.save(dependente);
+    }
+
+    public List<Dependente> listar() {
+        return dependenteRepository.findAll();
     }
 }

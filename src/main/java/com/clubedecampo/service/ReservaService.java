@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,5 +39,9 @@ public class ReservaService {
     public void atualizar(Reserva reserva) {
         reservaValidator.validar(reserva);
         reservaRepository.save(reserva);
+    }
+
+    public List<Reserva> listar() {
+        return reservaRepository.findAll();
     }
 }

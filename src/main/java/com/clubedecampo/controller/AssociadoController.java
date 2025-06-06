@@ -73,4 +73,16 @@ public class AssociadoController implements GenericController {
                     return ResponseEntity.ok(dto);
                 }).orElseGet( () -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping
+    public ResponseEntity<Object> listar() {
+        List<Associado> associados = associadoService.listar();
+
+        if (associados.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErroRespostaDTO(HttpStatus.NOT_FOUND.value(), "Nenhum associado cadastrado!", List.of()));
+        }
+
+        return ResponseEntity.ok(associados);
+    }
 }

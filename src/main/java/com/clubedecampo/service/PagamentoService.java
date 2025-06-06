@@ -6,6 +6,7 @@ import com.clubedecampo.repository.PagamentoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,5 +34,9 @@ public class PagamentoService {
 
     public void atualizar(Pagamento pagamento) {
         pagamentoRepository.save(pagamento);
+    }
+
+    public List<Pagamento> listar() {
+        return pagamentoRepository.findAll();
     }
 }

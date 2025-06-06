@@ -78,4 +78,16 @@ public class AreaController implements GenericController {
                     return ResponseEntity.ok(dto);
                 }).orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping
+    public ResponseEntity<Object> listar() {
+        List<Area> areas = areaService.listar();
+
+        if (areas.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErroRespostaDTO(HttpStatus.NOT_FOUND.value(), "Nenhuma área cadastrada!", List.of()));
+        }
+
+        return ResponseEntity.ok(areas);
+    }
 }

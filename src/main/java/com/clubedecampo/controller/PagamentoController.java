@@ -75,4 +75,16 @@ public class PagamentoController implements GenericController{
                     return ResponseEntity.ok(dto);
                 }).orElseGet( () -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping
+    public ResponseEntity<Object> listar() {
+        List<Pagamento> pagamentos = pagamentoService.listar();
+
+        if (pagamentos.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErroRespostaDTO(HttpStatus.NOT_FOUND.value(), "Nenhum pagamento cadastrado!", List.of()));
+        }
+
+        return ResponseEntity.ok(pagamentos);
+    }
 }

@@ -77,4 +77,16 @@ public class MensalidadeController implements GenericController {
                     return ResponseEntity.ok(dto);
                 }).orElseGet( () -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping
+    public ResponseEntity<Object> listar() {
+        List<Mensalidade> mensalidades = mensalidadeService.listar();
+
+        if (mensalidades.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErroRespostaDTO(HttpStatus.NOT_FOUND.value(), "Nenhuma mensalidade cadastrada!", List.of()));
+        }
+
+        return ResponseEntity.ok(mensalidades);
+    }
 }
