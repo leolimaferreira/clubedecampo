@@ -3,8 +3,8 @@ package com.clubedecampo.controller;
 import com.clubedecampo.dtos.AtualizarReservaDTO;
 import com.clubedecampo.dtos.CadastroReservaDTO;
 import com.clubedecampo.dtos.ErroRespostaDTO;
+import com.clubedecampo.dtos.ResultadoPesquisaReservaDTO;
 import com.clubedecampo.entity.Reserva;
-import com.clubedecampo.mappers.AreaMapper;
 import com.clubedecampo.mappers.ReservaMapper;
 import com.clubedecampo.service.AreaService;
 import com.clubedecampo.service.AssociadoService;
@@ -43,7 +43,7 @@ public class ReservaController implements GenericController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {
-        Optional<Reserva> reservaOptional = reservaService.obterPorId(id);
+        Optional<Reserva> reservaOptional = reservaService.buscarPorId(id);
 
         if(reservaOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -55,7 +55,7 @@ public class ReservaController implements GenericController {
 
     @PutMapping("{id}")
     public ResponseEntity<Object> atualizar(@PathVariable UUID id, @RequestBody @Valid AtualizarReservaDTO dto) {
-        Optional<Reserva> reservaOptional = reservaService.obterPorId(id);
+        Optional<Reserva> reservaOptional = reservaService.buscarPorId(id);
 
         if(reservaOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -70,5 +70,15 @@ public class ReservaController implements GenericController {
         reservaService.atualizar(reserva);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ResultadoPesquisaReservaDTO> buscarPorId(@PathVariable UUID id) {
+
+        return reservaService.buscarPorId(id)
+                .map(reserva -> {
+                    var dto = reservaMapper.toDto(reserva);
+                    return ResponseEntity.ok(dto);
+                }).orElse(ResponseEntity.notFound().build());
     }
 }

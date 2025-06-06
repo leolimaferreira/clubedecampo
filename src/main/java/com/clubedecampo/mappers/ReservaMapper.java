@@ -1,6 +1,7 @@
 package com.clubedecampo.mappers;
 
 import com.clubedecampo.dtos.CadastroReservaDTO;
+import com.clubedecampo.dtos.ResultadoPesquisaReservaDTO;
 import com.clubedecampo.entity.Reserva;
 import com.clubedecampo.repository.AreaRepository;
 import com.clubedecampo.repository.AssociadoRepository;
@@ -24,5 +25,5 @@ public abstract class ReservaMapper {
 
     @Mapping(target = "associadoId", source = "associado.id")
     @Mapping(target = "areaId", source = "area.id")
-    public abstract CadastroReservaDTO toDto(Reserva reserva);
+    public abstract ResultadoPesquisaReservaDTO toDto(Reserva reserva);
 }

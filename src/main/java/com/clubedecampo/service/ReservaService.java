@@ -31,7 +31,7 @@ public class ReservaService {
         reservaRepository.delete(reserva);
     }
 
-    public Optional<Reserva> obterPorId(UUID id) {
+    public Optional<Reserva> buscarPorId(UUID id) {
         return reservaRepository.findById(id);
     }
 
