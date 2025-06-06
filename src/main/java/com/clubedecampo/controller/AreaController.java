@@ -3,6 +3,7 @@ package com.clubedecampo.controller;
 import com.clubedecampo.dtos.AtualizarAreaDTO;
 import com.clubedecampo.dtos.CadastroAreaDTO;
 import com.clubedecampo.dtos.ErroRespostaDTO;
+import com.clubedecampo.dtos.ResultadoPesquisaAreaDTO;
 import com.clubedecampo.entity.Area;
 import com.clubedecampo.mappers.AreaMapper;
 import com.clubedecampo.service.AreaService;
@@ -66,5 +67,15 @@ public class AreaController implements GenericController {
         areaService.atualizar(area);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ResultadoPesquisaAreaDTO> buscarPorId(@PathVariable UUID id) {
+
+        return areaService.buscarPorId(id)
+                .map(area -> {
+                    var dto = areaMapper.toDto(area);
+                    return ResponseEntity.ok(dto);
+                }).orElse(ResponseEntity.notFound().build());
     }
 }
