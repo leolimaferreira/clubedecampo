@@ -32,7 +32,7 @@ public class MensalidadeService {
         mensalidadeRepository.delete(mensalidade);
     }
 
-    public Optional<Mensalidade> obterPorId(UUID id) {
+    public Optional<Mensalidade> buscarPorId(UUID id) {
         return mensalidadeRepository.findById(id);
     }
 

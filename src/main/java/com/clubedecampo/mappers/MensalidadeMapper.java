@@ -1,6 +1,7 @@
 package com.clubedecampo.mappers;
 
 import com.clubedecampo.dtos.CadastroMensalidadeDTO;
+import com.clubedecampo.dtos.ResultadoPesquisaMensalidadeDTO;
 import com.clubedecampo.entity.Mensalidade;
 import com.clubedecampo.repository.AssociadoRepository;
 import org.mapstruct.Mapper;
@@ -17,5 +18,5 @@ public abstract class MensalidadeMapper {
     public abstract Mensalidade toEntity(CadastroMensalidadeDTO dto);
 
     @Mapping(target = "associadoId", source = "associado.id")
-    public abstract CadastroMensalidadeDTO toDto(Mensalidade dependente);
+    public abstract ResultadoPesquisaMensalidadeDTO toDto(Mensalidade dependente);
 }

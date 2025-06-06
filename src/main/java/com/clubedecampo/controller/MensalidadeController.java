@@ -3,13 +3,13 @@ package com.clubedecampo.controller;
 import com.clubedecampo.dtos.AtualizarMensalidadeDTO;
 import com.clubedecampo.dtos.CadastroMensalidadeDTO;
 import com.clubedecampo.dtos.ErroRespostaDTO;
+import com.clubedecampo.dtos.ResultadoPesquisaMensalidadeDTO;
 import com.clubedecampo.entity.Mensalidade;
 import com.clubedecampo.mappers.MensalidadeMapper;
 import com.clubedecampo.service.AssociadoService;
 import com.clubedecampo.service.MensalidadeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +40,7 @@ public class MensalidadeController implements GenericController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {
-        Optional<Mensalidade> mensalidadeOptional = mensalidadeService.obterPorId(id);
+        Optional<Mensalidade> mensalidadeOptional = mensalidadeService.buscarPorId(id);
 
         if(mensalidadeOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -52,7 +52,7 @@ public class MensalidadeController implements GenericController {
 
     @PutMapping("{id}")
     public ResponseEntity<Object> atualizar(@PathVariable UUID id, @RequestBody @Valid AtualizarMensalidadeDTO dto) {
-        Optional<Mensalidade> mensalidadeOptional = mensalidadeService.obterPorId(id);
+        Optional<Mensalidade> mensalidadeOptional = mensalidadeService.buscarPorId(id);
 
         if(mensalidadeOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -66,5 +66,15 @@ public class MensalidadeController implements GenericController {
         mensalidadeService.atualizar(mensalidade);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ResultadoPesquisaMensalidadeDTO> buscarPorId(@PathVariable UUID id) {
+
+        return mensalidadeService.buscarPorId(id)
+                .map(mensalidade -> {
+                    var dto = mensalidadeMapper.toDto(mensalidade);
+                    return ResponseEntity.ok(dto);
+                }).orElseGet( () -> ResponseEntity.notFound().build());
     }
 }
