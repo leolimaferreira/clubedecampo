@@ -3,6 +3,7 @@ package com.clubedecampo.controller;
 import com.clubedecampo.dtos.AtualizarAssociadoDTO;
 import com.clubedecampo.dtos.CadastroAssociadoDTO;
 import com.clubedecampo.dtos.ErroRespostaDTO;
+import com.clubedecampo.dtos.ResultadoPesquisaAssociadoDTO;
 import com.clubedecampo.entity.Associado;
 import com.clubedecampo.mappers.AssociadoMapper;
 import com.clubedecampo.service.AssociadoService;
@@ -61,5 +62,15 @@ public class AssociadoController implements GenericController {
         associadoService.atualizar(associado);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ResultadoPesquisaAssociadoDTO> buscarPorId(@PathVariable UUID id) {
+
+        return associadoService.buscarPorId(id)
+                .map(associado -> {
+                    var dto = associadoMapper.toDto(associado);
+                    return ResponseEntity.ok(dto);
+                }).orElseGet( () -> ResponseEntity.notFound().build());
     }
 }

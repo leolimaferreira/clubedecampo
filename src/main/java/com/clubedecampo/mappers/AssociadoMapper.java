@@ -2,6 +2,7 @@ package com.clubedecampo.mappers;
 
 import com.clubedecampo.dtos.AtualizarAssociadoDTO;
 import com.clubedecampo.dtos.CadastroAssociadoDTO;
+import com.clubedecampo.dtos.ResultadoPesquisaAssociadoDTO;
 import com.clubedecampo.entity.Associado;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -16,5 +17,5 @@ public interface AssociadoMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void atualizarPorDTO(AtualizarAssociadoDTO dto, @MappingTarget Associado associado);
 
-    CadastroAssociadoDTO toDto(Associado associado);
+    ResultadoPesquisaAssociadoDTO toDto(Associado associado);
 }

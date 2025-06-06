@@ -30,6 +30,7 @@ public record AtualizarAssociadoDTO(
         @Size(max = 15, message = "campo fora do tamanho padrão")
         String celular,
         TipoAssociado tipoAssociado,
+        @Size(max = 20, message = "campo fora do tamanho padrão")
         String status,
         boolean carteirinhaAtiva
 ) {
