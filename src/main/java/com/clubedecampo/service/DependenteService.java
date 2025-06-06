@@ -25,7 +25,7 @@ public class DependenteService {
         dependenteRepository.delete(dependente);
     }
 
-    public Optional<Dependente> obterPorId(UUID id) {
+    public Optional<Dependente> buscarPorId(UUID id) {
         return dependenteRepository.findById(id);
     }
 

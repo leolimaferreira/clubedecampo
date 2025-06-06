@@ -2,6 +2,7 @@ package com.clubedecampo.mappers;
 
 import com.clubedecampo.dtos.AtualizarDependenteDTO;
 import com.clubedecampo.dtos.CadastroDependenteDTO;
+import com.clubedecampo.dtos.ResultadoPesquisaDependenteDTO;
 import com.clubedecampo.entity.Dependente;
 import com.clubedecampo.repository.AssociadoRepository;
 import org.mapstruct.*;
@@ -17,5 +18,5 @@ public abstract class DependenteMapper {
     public abstract Dependente toEntity(CadastroDependenteDTO dto);
 
     @Mapping(target = "associadoId", source = "associado.id")
-    public abstract CadastroDependenteDTO toDto(Dependente dependente);
+    public abstract ResultadoPesquisaDependenteDTO toDto(Dependente dependente);
 }

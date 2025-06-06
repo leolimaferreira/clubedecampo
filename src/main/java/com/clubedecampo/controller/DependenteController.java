@@ -3,6 +3,7 @@ package com.clubedecampo.controller;
 import com.clubedecampo.dtos.AtualizarDependenteDTO;
 import com.clubedecampo.dtos.CadastroDependenteDTO;
 import com.clubedecampo.dtos.ErroRespostaDTO;
+import com.clubedecampo.dtos.ResultadoPesquisaDependenteDTO;
 import com.clubedecampo.entity.Dependente;
 import com.clubedecampo.mappers.DependenteMapper;
 import com.clubedecampo.service.AssociadoService;
@@ -38,7 +39,7 @@ public class DependenteController implements GenericController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {
-        Optional<Dependente> dependenteOptional = dependenteService.obterPorId(id);
+        Optional<Dependente> dependenteOptional = dependenteService.buscarPorId(id);
 
         if (dependenteOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -50,7 +51,7 @@ public class DependenteController implements GenericController {
 
     @PutMapping("{id}")
     public ResponseEntity<Object> atualizar(@PathVariable UUID id, @RequestBody @Valid AtualizarDependenteDTO dto) {
-        Optional<Dependente> dependenteOptional = dependenteService.obterPorId(id);
+        Optional<Dependente> dependenteOptional = dependenteService.buscarPorId(id);
 
         if (dependenteOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -63,5 +64,15 @@ public class DependenteController implements GenericController {
         if(dto.associadoId() != null) dependente.setAssociado(associadoService.buscarPorId(dto.associadoId()).get());
         dependenteService.salvar(dependente);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ResultadoPesquisaDependenteDTO> buscarPorId(@PathVariable UUID id) {
+
+        return dependenteService.buscarPorId(id)
+                .map(dependente -> {
+                    var dto = dependenteMapper.toDto(dependente);
+                    return ResponseEntity.ok(dto);
+                }).orElseGet( () -> ResponseEntity.notFound().build());
     }
 }
