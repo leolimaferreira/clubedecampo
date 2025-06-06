@@ -1,6 +1,7 @@
 package com.clubedecampo.repository;
 
 import com.clubedecampo.entity.Area;
+import com.clubedecampo.entity.Associado;
 import com.clubedecampo.entity.Reserva;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +26,8 @@ public interface ReservaRepository extends JpaRepository<Reserva, UUID> {
                                            @Param("data") LocalDate data,
                                            @Param("horaInicio") LocalTime horaInicio,
                                            @Param("horaFim") LocalTime horaFim);
+
+    boolean existsByAssociado(Associado associado);
+
+    boolean existsByArea(Area area);
 }

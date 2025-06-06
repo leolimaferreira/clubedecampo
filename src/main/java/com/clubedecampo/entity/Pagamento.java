@@ -36,7 +36,7 @@ public class Pagamento {
     private String formaPagamento;
 
     @Column(name = "status", length = 20)
-    private String status = "pago";
+    private String status = "pendente";
 
     @PrePersist
     public void prePersist() {

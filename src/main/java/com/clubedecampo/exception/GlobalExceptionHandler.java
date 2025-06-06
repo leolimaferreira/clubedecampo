@@ -58,6 +58,12 @@ public class GlobalExceptionHandler {
         return ErroRespostaDTO.unprocessbleEntity(e.getMessage());
     }
 
+    @ExceptionHandler(OperacaoNaoPermitidaException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErroRespostaDTO handleOperacaoNaoPermitidaException(OperacaoNaoPermitidaException e) {
+        return ErroRespostaDTO.respostaPadrao(e.getMessage());
+    }
+
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErroRespostaDTO handleErrosNaoTratados(RuntimeException e) {

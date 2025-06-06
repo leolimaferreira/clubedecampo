@@ -48,7 +48,7 @@ CREATE TABLE pagamento (
                            valor NUMERIC(10,2) NOT NULL,
                            data_pagamento DATE NOT NULL,
                            forma_pagamento VARCHAR(20),
-                           status VARCHAR(20) DEFAULT 'pago'
+                           status VARCHAR(20) DEFAULT 'pendente'
 );
 
 CREATE TABLE mensalidade (

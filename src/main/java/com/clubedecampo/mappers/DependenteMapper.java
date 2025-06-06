@@ -1,10 +1,10 @@
 package com.clubedecampo.mappers;
 
+import com.clubedecampo.dtos.AtualizarDependenteDTO;
 import com.clubedecampo.dtos.CadastroDependenteDTO;
 import com.clubedecampo.entity.Dependente;
 import com.clubedecampo.repository.AssociadoRepository;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
