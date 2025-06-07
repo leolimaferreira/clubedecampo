@@ -200,9 +200,10 @@ A API utiliza os seguintes códigos HTTP e padrões de resposta:
 | 204    | No Content    | Operação bem-sucedida sem conteúdo para retornar                          | PUT /{recurso}/{id}, DELETE /{recurso}/{id} |
 
 #### ⚠️ Erros Cliente (4xx)
-| Código | Status         | Descrição                                                                 | Estrutura de Resposta               |
-|--------|----------------|---------------------------------------------------------------------------|-------------------------------------|
-| 400    | Bad Request    | Validação falhou ou requisição malformada                                 | ```json
+| Código | Status         | Descrição                                                                 |
+|--------|----------------|---------------------------------------------------------------------------|
+| 400    | Bad Request    | Validação falhou ou requisição malformada                                 |
+| 404    | Not Found      | Recurso não encontrado                                                    |
 ```http
 {
 "status": 400,
@@ -212,9 +213,8 @@ A API utiliza os seguintes códigos HTTP e padrões de resposta:
 "Campo 'cpf' inválido"
 ]
 }
-
-```http |
-| 404    | Not Found      | Recurso não encontrado                                                    | ```json
+```
+```
 {
   "status": 404,
   "mensagem": "Área não cadastrada",
