@@ -214,7 +214,7 @@ A API utiliza os seguintes códigos HTTP e padrões de resposta:
 ]
 }
 ```
-```
+```http
 {
   "status": 404,
   "mensagem": "Área não cadastrada",
