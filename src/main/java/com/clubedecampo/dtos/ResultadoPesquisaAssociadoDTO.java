@@ -1,8 +1,7 @@
 package com.clubedecampo.dtos;
 
-import com.clubedecampo.entity.TipoAssociado;
-
 import java.time.LocalDate;
+import java.util.UUID;
 
 public record ResultadoPesquisaAssociadoDTO(
         String nome,
@@ -17,7 +16,7 @@ public record ResultadoPesquisaAssociadoDTO(
         String telefoneComercial,
         String celular,
         LocalDate dataCadastro,
-        TipoAssociado tipoAssociado,
+        UUID tipo_associado_id,
         String status,
         boolean carteirinhaAtiva
 ) {

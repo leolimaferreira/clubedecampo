@@ -35,8 +35,9 @@ public class Pagamento {
     @Column(name = "forma_pagamento", length = 20)
     private String formaPagamento;
 
-    @Column(name = "status", length = 20)
-    private String status = "pendente";
+    @OneToOne
+    @JoinColumn(name = "mensalidade_id")
+    private Mensalidade mensalidade;
 
     @PrePersist
     public void prePersist() {

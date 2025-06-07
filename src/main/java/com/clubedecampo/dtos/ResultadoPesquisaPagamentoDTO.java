@@ -9,6 +9,7 @@ public record ResultadoPesquisaPagamentoDTO(
         BigDecimal valor,
         LocalDate dataPagamento,
         String formaPagamento,
-        String status
+        String status,
+        UUID mensalidade_id
 ) {
 }

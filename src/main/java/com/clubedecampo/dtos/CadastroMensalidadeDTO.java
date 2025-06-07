@@ -14,9 +14,6 @@ public record CadastroMensalidadeDTO(
         @NotNull(message = "campo obrigatorio")
         YearMonth mesReferencia,
         @NotNull(message = "campo obrigatorio")
-        BigDecimal valorBase,
-        BigDecimal valorCorrigido,
-        @NotNull(message = "campo obrigatorio")
         @Future(message = "A data de vencimento deve ser no futuro")
         LocalDate dataVencimento
 ) {

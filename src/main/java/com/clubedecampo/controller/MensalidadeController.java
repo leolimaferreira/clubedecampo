@@ -4,6 +4,7 @@ import com.clubedecampo.dtos.AtualizarMensalidadeDTO;
 import com.clubedecampo.dtos.CadastroMensalidadeDTO;
 import com.clubedecampo.dtos.ErroRespostaDTO;
 import com.clubedecampo.dtos.ResultadoPesquisaMensalidadeDTO;
+import com.clubedecampo.entity.Associado;
 import com.clubedecampo.entity.Mensalidade;
 import com.clubedecampo.mappers.MensalidadeMapper;
 import com.clubedecampo.service.AssociadoService;
@@ -31,7 +32,9 @@ public class MensalidadeController implements GenericController {
     @PostMapping
     public ResponseEntity<Void> salvar(@RequestBody CadastroMensalidadeDTO dto) {
         Mensalidade mensalidade = mensalidadeMapper.toEntity(dto);
-        mensalidade.setAssociado(associadoService.buscarPorId(dto.associadoId()).get());
+        Associado associado = associadoService.buscarPorId(dto.associadoId()).get();
+        mensalidade.setAssociado(associado);
+        mensalidade.setValorBase(associado.getTipoAssociado().getValorBase());
         mensalidadeService.salvar(mensalidade);
 
         URI location = gerarHeaderLocation(mensalidade.getId());
@@ -61,7 +64,6 @@ public class MensalidadeController implements GenericController {
 
         var mensalidade = mensalidadeOptional.get();
         if(dto.valorCorrigido() != null) mensalidade.setValorCorrigido(dto.valorCorrigido());
-        if(dto.status() != null) mensalidade.setStatus(dto.status());
         if(dto.dataPagamento() != null) mensalidade.setDataPagamento(dto.dataPagamento());
         mensalidadeService.atualizar(mensalidade);
 

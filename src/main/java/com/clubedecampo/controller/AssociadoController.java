@@ -7,6 +7,7 @@ import com.clubedecampo.dtos.ResultadoPesquisaAssociadoDTO;
 import com.clubedecampo.entity.Associado;
 import com.clubedecampo.mappers.AssociadoMapper;
 import com.clubedecampo.service.AssociadoService;
+import com.clubedecampo.service.TipoAssociadoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,11 +26,13 @@ public class AssociadoController implements GenericController {
 
     private final AssociadoService associadoService;
     private final AssociadoMapper associadoMapper;
+    private final TipoAssociadoService tipoAssociadoService;
 
     @PostMapping
     public ResponseEntity<Void> salvar(@RequestBody @Valid CadastroAssociadoDTO dto) {
 
         Associado associado = associadoMapper.toEntity(dto);
+        associado.setTipoAssociado(tipoAssociadoService.buscarPorId(dto.tipo_associado_id()).get());
         associadoService.salvar(associado);
         URI location = gerarHeaderLocation(associado.getId());
         return ResponseEntity.created(location).build();

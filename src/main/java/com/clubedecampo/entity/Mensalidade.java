@@ -24,7 +24,7 @@ public class Mensalidade {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "associado_id")
     private Associado associado;
 
@@ -37,9 +37,6 @@ public class Mensalidade {
 
     @Column(name = "valor_corrigido", nullable = false, precision = 10, scale = 2)
     private BigDecimal valorCorrigido;
-
-    @Column(name = "status", length = 20)
-    private String status = "pendente";
 
     @Column(name = "data_vencimento", nullable = false)
     private LocalDate dataVencimento;

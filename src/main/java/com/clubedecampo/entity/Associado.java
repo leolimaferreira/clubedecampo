@@ -45,10 +45,10 @@ public class Associado {
     @Column(name = "estado", nullable = false, length = 2)
     private String estado;
 
-    @Column(name = "telefone_residencial", nullable = false, length = 15)
+    @Column(name = "telefone_residencial", nullable = true, length = 15)
     private String telefoneResidencial;
 
-    @Column(name = "telefone_comercial", nullable = false, length = 15)
+    @Column(name = "telefone_comercial", nullable = true, length = 15)
     private String telefoneComercial;
 
     @Column(name = "celular", nullable = false, length = 15)
@@ -57,8 +57,8 @@ public class Associado {
     @Column(name = "data_cadastro", nullable = false)
     private LocalDate dataCadastro;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_associado", length = 10)
+    @ManyToOne
+    @JoinColumn(name = "tipo_associado_id")
     private TipoAssociado tipoAssociado;
 
     @Column(name = "status", length = 20)

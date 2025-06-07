@@ -1,8 +1,9 @@
 package com.clubedecampo.dtos;
 
-import com.clubedecampo.entity.TipoAssociado;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.UUID;
 
 public record CadastroAssociadoDTO(
         @NotBlank(message = "campo obrigatorio")
@@ -35,5 +36,5 @@ public record CadastroAssociadoDTO(
         String telefoneComercial,
         @Size(max = 15, message = "campo fora do tamanho padrão")
         String celular,
-        TipoAssociado tipoAssociado) {
+        UUID tipo_associado_id) {
 }

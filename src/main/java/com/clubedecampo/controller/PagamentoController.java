@@ -4,9 +4,11 @@ import com.clubedecampo.dtos.AtualizarPagamentoDTO;
 import com.clubedecampo.dtos.CadastroPagamentoDTO;
 import com.clubedecampo.dtos.ErroRespostaDTO;
 import com.clubedecampo.dtos.ResultadoPesquisaPagamentoDTO;
+import com.clubedecampo.entity.Mensalidade;
 import com.clubedecampo.entity.Pagamento;
 import com.clubedecampo.mappers.PagamentoMapper;
 import com.clubedecampo.service.AssociadoService;
+import com.clubedecampo.service.MensalidadeService;
 import com.clubedecampo.service.PagamentoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +29,18 @@ public class PagamentoController implements GenericController{
     private final PagamentoService pagamentoService;
     private final AssociadoService associadoService;
     private final PagamentoMapper pagamentoMapper;
+    private final MensalidadeService mensalidadeService;
 
     @PostMapping
     public ResponseEntity<Void> salvar(@RequestBody CadastroPagamentoDTO dto) {
         Pagamento pagamento = pagamentoMapper.toEntity(dto);
+        Mensalidade mensalidade = mensalidadeService.buscarPorId(dto.mensalidadeId()).get();
+
         pagamento.setAssociado(associadoService.buscarPorId(dto.associadoId()).get());
+        pagamento.setMensalidade(mensalidade);
+        mensalidade.setDataPagamento(pagamento.getDataPagamento());
+        pagamento.setValor(mensalidade.getValorCorrigido());
+
         pagamentoService.salvar(pagamento);
 
         URI location = gerarHeaderLocation(pagamento.getId());
@@ -60,7 +69,6 @@ public class PagamentoController implements GenericController{
         }
 
         var pagamento = pagamentoOptional.get();
-        if (dto.status() != null) pagamento.setStatus(dto.status());
         pagamentoService.atualizar(pagamento);
 
         return ResponseEntity.noContent().build();

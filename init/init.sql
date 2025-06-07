@@ -1,3 +1,9 @@
+CREATE TABLE tipo_associado (
+                                id UUID PRIMARY KEY,
+                                tipo VARCHAR(20) NOT NULL UNIQUE,
+                                valor_base NUMERIC(10,2) NOT NULL
+);
+
 CREATE TABLE associado (
                            id UUID PRIMARY KEY,
                            nome VARCHAR(100) NOT NULL,
@@ -10,9 +16,9 @@ CREATE TABLE associado (
                            estado VARCHAR(2) NOT NULL,
                            telefone_residencial VARCHAR(15),
                            telefone_comercial VARCHAR(15),
-                           celular VARCHAR(15),
+                           celular VARCHAR(15) NOT NULL,
                            data_cadastro DATE NOT NULL,
-                           tipo_associado VARCHAR(10) CHECK (tipo_associado IN ('Standard', 'Gold', 'Black')),
+                           tipo_associado_id UUID REFERENCES tipo_associado(id),
                            status VARCHAR(20) DEFAULT 'ativo',
                            carteirinha_ativa BOOLEAN DEFAULT TRUE
 );
@@ -42,22 +48,21 @@ CREATE TABLE reserva (
                          numero_pessoas INTEGER
 );
 
+CREATE TABLE mensalidade (
+                             id UUID PRIMARY KEY,
+                             associado_id UUID REFERENCES associado(id),
+                             mes_referencia DATE NOT NULL,
+                             valor_base NUMERIC(10,2) NOT NULL,
+                             valor_corrigido NUMERIC(10,2) NOT NULL,
+                             data_vencimento DATE NOT NULL,
+                             data_pagamento DATE
+);
+
 CREATE TABLE pagamento (
                            id UUID PRIMARY KEY,
                            associado_id UUID REFERENCES associado(id),
                            valor NUMERIC(10,2) NOT NULL,
                            data_pagamento DATE NOT NULL,
                            forma_pagamento VARCHAR(20),
-                           status VARCHAR(20) DEFAULT 'pendente'
-);
-
-CREATE TABLE mensalidade (
-                             id UUID PRIMARY KEY,
-                             associado_id UUID REFERENCES associado(id),
-                             mes_referencia DATE NOT NULL,
-                             valor_base NUMERIC(10,2) NOT NULL,
-                             valor_corrigido NUMERIC(10,2),
-                             status VARCHAR(20) DEFAULT 'pendente',
-                             data_vencimento DATE NOT NULL,
-                             data_pagamento DATE
+                           mensalidade_id UUID UNIQUE REFERENCES mensalidade(id)
 );
