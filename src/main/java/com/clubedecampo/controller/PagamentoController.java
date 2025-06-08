@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,7 +40,9 @@ public class PagamentoController implements GenericController{
 
         pagamento.setAssociado(associadoService.buscarPorId(dto.associadoId()).get());
         pagamento.setMensalidade(mensalidade);
+        pagamento.setDataPagamento(LocalDate.now());
         mensalidade.setDataPagamento(pagamento.getDataPagamento());
+        pagamentoService.calcularValorCorrigido(pagamento);
         pagamento.setValor(mensalidade.getValorCorrigido());
 
         pagamentoService.salvar(pagamento);

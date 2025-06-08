@@ -36,5 +36,5 @@ public record CadastroAssociadoDTO(
         String telefoneComercial,
         @Size(max = 15, message = "campo fora do tamanho padrão")
         String celular,
-        UUID tipo_associado_id) {
+        UUID tipoAssociadoId) {
 }

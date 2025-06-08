@@ -58,7 +58,7 @@ public class Associado {
     private LocalDate dataCadastro;
 
     @ManyToOne
-    @JoinColumn(name = "tipo_associado_id")
+    @JoinColumn(name = "tipoAssociadoId")
     private TipoAssociado tipoAssociado;
 
     @Column(name = "status", length = 20)

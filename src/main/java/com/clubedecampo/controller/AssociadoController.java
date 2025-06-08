@@ -32,7 +32,7 @@ public class AssociadoController implements GenericController {
     public ResponseEntity<Void> salvar(@RequestBody @Valid CadastroAssociadoDTO dto) {
 
         Associado associado = associadoMapper.toEntity(dto);
-        associado.setTipoAssociado(tipoAssociadoService.buscarPorId(dto.tipo_associado_id()).get());
+        associado.setTipoAssociado(tipoAssociadoService.buscarPorId(dto.tipoAssociadoId()).get());
         associadoService.salvar(associado);
         URI location = gerarHeaderLocation(associado.getId());
         return ResponseEntity.created(location).build();

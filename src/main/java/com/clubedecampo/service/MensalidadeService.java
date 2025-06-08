@@ -22,9 +22,9 @@ public class MensalidadeService {
     }
 
     public void deletar(Mensalidade mensalidade) {
-        if(mensalidade.getStatus().equalsIgnoreCase("paga")) {
+        /*if(mensalidade.getStatus().equalsIgnoreCase("paga")) {
             throw new OperacaoNaoPermitidaException("Só é possível deletar mensalidades pendentes");
-        }
+        }*/
 
         if(!mensalidade.getDataVencimento().isAfter(LocalDate.now())) {
             throw new OperacaoNaoPermitidaException("Só é possível deletar mensalidades ativas");

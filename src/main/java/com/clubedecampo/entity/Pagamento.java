@@ -39,8 +39,4 @@ public class Pagamento {
     @JoinColumn(name = "mensalidade_id")
     private Mensalidade mensalidade;
 
-    @PrePersist
-    public void prePersist() {
-        this.dataPagamento = LocalDate.now();
-    }
 }

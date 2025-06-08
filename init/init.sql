@@ -53,7 +53,7 @@ CREATE TABLE mensalidade (
                              associado_id UUID REFERENCES associado(id),
                              mes_referencia DATE NOT NULL,
                              valor_base NUMERIC(10,2) NOT NULL,
-                             valor_corrigido NUMERIC(10,2) NOT NULL,
+                             valor_corrigido NUMERIC(10,2),
                              data_vencimento DATE NOT NULL,
                              data_pagamento DATE
 );

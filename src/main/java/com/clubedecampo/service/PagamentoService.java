@@ -6,6 +6,8 @@ import com.clubedecampo.repository.PagamentoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,9 +27,9 @@ public class PagamentoService {
     }
 
     public void deletar(Pagamento pagamento) {
-        if(pagamento.getStatus().equalsIgnoreCase("pago")) {
+        /*if(pagamento.getStatus().equalsIgnoreCase("pago")) {
             throw new OperacaoNaoPermitidaException("Só é possível deletar pagamentos pendentes");
-        }
+        }*/
 
         pagamentoRepository.delete(pagamento);
     }
@@ -38,5 +40,21 @@ public class PagamentoService {
 
     public List<Pagamento> listar() {
         return pagamentoRepository.findAll();
+    }
+
+    public void calcularValorCorrigido(Pagamento pagamento) {
+        LocalDate dataPagamento = pagamento.getDataPagamento();
+        LocalDate dataVencimento = pagamento.getMensalidade().getDataVencimento();
+        BigDecimal valorBase = pagamento.getMensalidade().getValorBase();
+
+        if (dataPagamento.isAfter(dataVencimento)) {
+            BigDecimal multa = new BigDecimal("0.05");
+            BigDecimal valorCorrigido = valorBase.multiply(BigDecimal.ONE.add(multa))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP);
+
+            pagamento.getMensalidade().setValorCorrigido(valorCorrigido);
+        } else {
+            pagamento.getMensalidade().setValorCorrigido(valorBase);
+        }
     }
 }
